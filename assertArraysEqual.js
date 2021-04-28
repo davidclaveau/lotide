@@ -1,13 +1,17 @@
 const assertArraysEqual = function(actual, expected) {
+  let truthCount = 0;
   for (let val = 0; val < actual.length; val++) {
     if (actual[val] !== expected[val]) {
       // Return false if any of the values don't perfectly match
       console.log(`🛑🛑🛑 Assertion Failed: ${actual} !== ${expected}`);
       break;
     } else {
-      console.log(`✅✅✅ Assertion Passed: ${actual} === ${expected}`);
-      break;
+      truthCount++;
     }
+  }
+  if (truthCount === (actual.length)) {
+    // truthCount only equals actual.length if every value matched perfectly
+    console.log(`✅✅✅ Assertion Passed: ${actual} === ${expected}`);
   }
 };
 
