@@ -1,21 +1,25 @@
 const assertArraysEqual = function(actual, expected) {
-  let truthCount = 0;
-  for (let val = 0; val < actual.length; val++) {
-    if (actual[val] !== expected[val]) {
-      // Return false if any of the values don't perfectly match
-      console.log(`🛑🛑🛑 Assertion Failed: ${actual} !== ${expected}`);
-      break;
-    } else {
-      truthCount++;
+  console.log(eqArrays(actual, expected));
+};
+
+const eqArrays = function(arrayOne, arrayTwo) {
+
+  const pass = `✅✅✅ Assertion Passed: ${arrayOne} === ${arrayTwo}`;
+  const fail = `🛑🛑🛑 Assertion Failed: ${arrayOne} !== ${arrayTwo}`;
+
+
+  // If the lengths are different, they don't match and can end the code
+  if (arrayOne.length !== arrayTwo.length) {
+    return fail;
+  }
+  // Return false if any of the values don't perfectly match
+  for (let val = 0; val < arrayOne.length; val++) {
+    if (arrayOne[val] !== arrayTwo[val]) {
+      return fail;
     }
   }
-
-  if (truthCount === expected.length) {
-    // truthCount only equals expected.length if every value matched perfectly
-    console.log(`✅✅✅ Assertion Passed: ${actual} === ${expected}`);
-  } else if (truthCount !== expected.length) {
-    console.log(`🛑🛑🛑 Assertion Failed: ${actual} !== ${expected}`);
-  }
+  // If able to exit the loop/if statement, all values match and return true
+  return pass;
 };
 
 assertArraysEqual([1, 2, 3], [1, 2, 3]); // => true
