@@ -9,9 +9,12 @@ const assertArraysEqual = function(actual, expected) {
       truthCount++;
     }
   }
-  if (truthCount === (actual.length)) {
-    // truthCount only equals actual.length if every value matched perfectly
+
+  if (truthCount === expected.length) {
+    // truthCount only equals expected.length if every value matched perfectly
     console.log(`✅✅✅ Assertion Passed: ${actual} === ${expected}`);
+  } else if (truthCount !== expected.length) {
+    console.log(`🛑🛑🛑 Assertion Failed: ${actual} !== ${expected}`);
   }
 };
 
