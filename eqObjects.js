@@ -1,3 +1,12 @@
+const assertEqual = function(actual, expected) {
+  // If actual === expected
+  if (actual === expected) {
+    console.log(`✅✅✅ Assertion Passed: ${actual}  === ${expected}`);
+  } else {
+    console.log(`🛑🛑🛑 Assertion Failed: ${actual} !== ${expected}`);
+  }
+};
+
 const eqArrays = function(arrayOne, arrayTwo) {
 
   // Return false if any of the values don't perfectly match
@@ -12,15 +21,12 @@ const eqArrays = function(arrayOne, arrayTwo) {
 
 const eqObjects = function(object1, object2) {
 
-  const pass = `✅✅✅ Assertion Passed: ${object1}  === ${object2}`;
-  const fail = `🛑🛑🛑 Assertion Failed: ${object1} !== ${object2}`;
-
   const keys1 = Object.keys(object1);
   const keys2 = Object.keys(object2);
   
   // Check to make sure the keys are the same length
   if (keys1.length !== keys2.length) {
-    return fail;
+    return false;
   }
   
   // Compare each key's value in both objects
@@ -32,17 +38,17 @@ const eqObjects = function(object1, object2) {
       // Check if object2's key is also an array
       if (!Array.isArray(object2[key])) {
         
-        return fail;
+        return false;
         
       // Check if object2's key array is the same length
       } else if (object1[key].length !== object2[key].length) {
         
-        return fail;
+        return false;
         
       // Check if the two arrays are equal
       } else if (!eqArrays(object1[key], object2[key])) {
         
-        return fail;
+        return false;
       }
 
     // If it's an object, pass it back into the function (keep going)
@@ -53,11 +59,11 @@ const eqObjects = function(object1, object2) {
     // Compare the primitive data types
     } else if (object1[key] !== object2[key]) {
       
-      return fail;
+      return false;
     }
   }
 
-  return pass;
+  return true;
 };
 
 
