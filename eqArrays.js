@@ -2,9 +2,9 @@
 const assertEqual = function(actual, expected) {
   // If actual === expected
   if (actual === expected) {
-    console.log(`✅✅✅ Assertion Passed: ${actual}  === ${expected}`);
+    return (`✅✅✅ Assertion Passed: ${actual}  === ${expected}`);
   } else {
-    console.log(`🛑🛑🛑 Assertion Failed: ${actual} !== ${expected}`);
+    return (`🛑🛑🛑 Assertion Failed: ${actual} !== ${expected}`);
   }
 };
 
@@ -13,20 +13,57 @@ const eqArrays = function(arrayOne, arrayTwo) {
   if (arrayOne.length !== arrayTwo.length) {
     return false;
   }
-  // Return false if any of the values don't perfectly match
+
   for (let val = 0; val < arrayOne.length; val++) {
-    if (arrayOne[val] !== arrayTwo[val]) {
-      return false;
+    
+    // Check if the current values are arrays
+    if (Array.isArray(arrayOne[val]) && Array.isArray(arrayTwo[val])) {
+      
+      // Run through the function again, only return if returning false
+      if (!eqArrays(arrayOne[val], arrayTwo[val])) {
+        return false;
+      }  
+    } else {
+      // Not arrays, compare each value 
+      if (arrayOne[val] !== arrayTwo[val]) {
+      
+        return false;
+      }
     }
   }
-  // If able to exit the loop/if statement, all values match and return true
+  
   return true;
 };
 
-eqArrays([1, 2, 3], [1, 2, 3]); // => true
-eqArrays([1, 2, 3], [3, 2, 1]); // => false
+console.log(eqArrays(
+  [[2, 3], [4]],
+  [[2, 3], [4]])); // => true
 
-eqArrays(["1", "2", "3"], ["1", "2", "3"]); // => true
-eqArrays(["1", "2", "3"], ["1", "2", 3]); // => false
+console.log(eqArrays(
+  [[2, 3], [4]],
+  [[2, 3], [4, 5]])); // => false
 
-assertEqual(eqArrays([1, 2, 3], [1, 2, 3]), true); // => should PASS
+console.log(eqArrays(
+  [[2, 3], [4]],
+  [[2, 3], 4])); // => false
+  
+console.log(eqArrays(
+  [[2, 3], [4], [5, [6,7]]],
+  [[2, 3], [4], [5, [6, 7, 8]]])); // => false
+  
+// TEST
+// console.log(assertEqual(eqArrays(
+//   [[2, 3], [4]],
+//   [[2, 3], [4]]), true)); // => PASS
+
+// console.log(assertEqual(eqArrays(
+//   [[2, 3], [4]],
+//   [[2, 3], [4, 5]]), false)); // => PASS
+
+// console.log(assertEqual(eqArrays(
+//   [[2, 3], [4]],
+//   [[2, 3], 4]), false)); // => PASS
+
+// console.log(assertEqual(eqArrays(
+//   [[2, 3], [4], [5, [6,7]]],
+//   [[2, 3], [4], [5, [6, 7, 8]]]), false)); // => PASS
