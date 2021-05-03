@@ -1,24 +1,31 @@
 const assertArraysEqual = function(actual, expected) {
-  console.log(eqArrays(actual, expected));
+  return (eqArrays(actual, expected));
 };
 
 const eqArrays = function(arrayOne, arrayTwo) {
-
-  const pass = `✅✅✅ Assertion Passed: ${arrayOne} === ${arrayTwo}`;
-  const fail = `🛑🛑🛑 Assertion Failed: ${arrayOne} !== ${arrayTwo}`;
-
-  // If the lengths are different, they don't match and can end the code
   if (arrayOne.length !== arrayTwo.length) {
-    return fail;
+    return false;
   }
-  // Return false if any of the values don't perfectly match
+
   for (let val = 0; val < arrayOne.length; val++) {
-    if (arrayOne[val] !== arrayTwo[val]) {
-      return fail;
+    
+    // Check if the current values are arrays
+    if (Array.isArray(arrayOne[val]) && Array.isArray(arrayTwo[val])) {
+      
+      // Run through the function again, only return if returning false
+      if (!eqArrays(arrayOne[val], arrayTwo[val])) {
+        return false;
+      }
+    } else {
+      // If not arrays, compare each value
+      if (arrayOne[val] !== arrayTwo[val]) {
+      
+        return false;
+      }
     }
   }
-  // If able to exit the loop/if statement, all values match and return true
-  return pass;
+  
+  return true;
 };
 
 const map = function(array, callback) {
@@ -26,16 +33,19 @@ const map = function(array, callback) {
   for (let item of array) {
     results.push(callback(item));
   }
+  
   return results;
 };
 
-const words = ["ground", "control", "to", "major", "tom"];
+module.exports = map;
 
-const results1 = map(words, word => word[0]);
-const results2 = map(words, word => word[1]);
-const results3 = map(words, word => word[2]);
+// const words = ["ground", "control", "to", "major", "tom"];
 
-// TEST
-console.log(assertArraysEqual(results1, [ 'g', 'c', 't', 'm', 't' ])); // PASS
-console.log(assertArraysEqual(results2, [ 'r', 'o', 'o', 'a', 'o' ])); // PASS
-console.log(assertArraysEqual(results3, [ 'o', 'n', undefined, 'j', 'm' ])); // PASS
+// const results1 = map(words, word => word[0]);
+// const results2 = map(words, word => word[1]);
+// const results3 = map(words, word => word[2]);
+
+// // TEST
+// console.log(assertArraysEqual(results1, [ 'g', 'c', 't', 'm', 't' ])); // PASS
+// console.log(assertArraysEqual(results2, [ 'r', 'o', 'o', 'a', 'o' ])); // PASS
+// console.log(assertArraysEqual(results3, [ 'o', 'n', undefined, 'j', 'm' ])); // PASS

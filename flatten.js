@@ -1,45 +1,52 @@
 const assertArraysEqual = function(actual, expected) {
-  console.log(eqArrays(actual, expected));
+  return (eqArrays(actual, expected));
 };
 
 const eqArrays = function(arrayOne, arrayTwo) {
-
-  const pass = `✅✅✅ Assertion Passed: ${arrayOne} === ${arrayTwo}`;
-  const fail = `🛑🛑🛑 Assertion Failed: ${arrayOne} !== ${arrayTwo}`;
-
-
-  // If the lengths are different, they don't match and can end the code
   if (arrayOne.length !== arrayTwo.length) {
-    return fail;
+    return false;
   }
-  // Return false if any of the values don't perfectly match
+
   for (let val = 0; val < arrayOne.length; val++) {
-    if (arrayOne[val] !== arrayTwo[val]) {
-      return fail;
+    
+    // Check if the current values are arrays
+    if (Array.isArray(arrayOne[val]) && Array.isArray(arrayTwo[val])) {
+      
+      // Run through the function again, only return if returning false
+      if (!eqArrays(arrayOne[val], arrayTwo[val])) {
+        return false;
+      }
+    } else {
+      // If not arrays, compare each value
+      if (arrayOne[val] !== arrayTwo[val]) {
+      
+        return false;
+      }
     }
   }
-  // If able to exit the loop/if statement, all values match and return true
-  return pass;
+  
+  return true;
 };
 
 const flatten = function(values) {
   const flattenedArr = [];
 
-  for (value of values) {
+  for (const value of values) {
     if (Array.isArray(value)) {
-      for (innerValue of value) {
+      for (const innerValue of value) {
         flattenedArr.push(innerValue);
       }
     } else {
-      flattenedArr.push(value)
+      flattenedArr.push(value);
     }
   }
   return flattenedArr;
 };
 
+module.exports = flatten;
 
-console.log(flatten([1, 2, [3, 4], 5, [6]])); // => [1, 2, 3, 4, 5, 6]
+// console.log(flatten([1, 2, [3, 4], 5, [6]])); // => [1, 2, 3, 4, 5, 6]
 
-// TEST
-assertArraysEqual(flatten([1, 2, [3, 4], 5, [6]]), [1, 2, 3, 4, 5, 6]); // => PASS
-assertArraysEqual(flatten([1, 2, [3, 4], [5, 6], [7, 8, 9], 10, [11]]), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]); // => PASS
+// // TEST
+// assertArraysEqual(flatten([1, 2, [3, 4], 5, [6]]), [1, 2, 3, 4, 5, 6]); // => PASS
+// assertArraysEqual(flatten([1, 2, [3, 4], [5, 6], [7, 8, 9], 10, [11]]), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]); // => PASS

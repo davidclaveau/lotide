@@ -21,7 +21,7 @@ const middle = function(array) {
     midVal.push(array[midIndexOther]);
     midVal.push(array[midIndex]);
   }
-  console.log("midVal", midVal)
+  console.log("midVal", midVal);
   return (midVal);
 };
 

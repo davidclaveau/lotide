@@ -8,14 +8,28 @@ const assertEqual = function(actual, expected) {
 };
 
 const eqArrays = function(arrayOne, arrayTwo) {
+  if (arrayOne.length !== arrayTwo.length) {
+    return false;
+  }
 
-  // Return false if any of the values don't perfectly match
   for (let val = 0; val < arrayOne.length; val++) {
-    if (arrayOne[val] !== arrayTwo[val]) {
-      return false;
+    
+    // Check if the current values are arrays
+    if (Array.isArray(arrayOne[val]) && Array.isArray(arrayTwo[val])) {
+      
+      // Run through the function again, only return if returning false
+      if (!eqArrays(arrayOne[val], arrayTwo[val])) {
+        return false;
+      }
+    } else {
+      // If not arrays, compare each value
+      if (arrayOne[val] !== arrayTwo[val]) {
+      
+        return false;
+      }
     }
   }
-  // If able to exit the loop/if statement, all values match and return true
+  
   return true;
 };
 
@@ -51,10 +65,10 @@ const eqObjects = function(object1, object2) {
         return false;
       }
 
-    // If it's an object, pass it back into the function (keep going)
+    // If it's an object, pass it back into the function
     } else if (typeof object1[key] === 'object') {
 
-        return eqObjects(object1[key], object2[key]);
+      return eqObjects(object1[key], object2[key]);
 
     // Compare the primitive data types
     } else if (object1[key] !== object2[key]) {
@@ -66,44 +80,45 @@ const eqObjects = function(object1, object2) {
   return true;
 };
 
+module.exports = eqObjects;
 
-console.log("test 1: ", eqObjects(
-  { a: { z: 1 }, b: 2 },
-  { a: { z: 1 }, b: 2 })); // => true
+// console.log("test 1: ", eqObjects(
+//   { a: { z: 1 }, b: 2 },
+//   { a: { z: 1 }, b: 2 })); // => true
 
-console.log("test 2: ", eqObjects(
-  { a: { y: 0, z: 1 }, b: 2 },
-  { a: { z: 1 }, b: 2 }
-)); // => false
+// console.log("test 2: ", eqObjects(
+//   { a: { y: 0, z: 1 }, b: 2 },
+//   { a: { z: 1 }, b: 2 }
+// )); // => false
 
-console.log("test 3: ", eqObjects(
-  { a: { y: 0, z: 1 }, b: 2 },
-  { a: 1, b: 2 }
-  )); // => false)
+// console.log("test 3: ", eqObjects(
+//   { a: { y: 0, z: 1 }, b: 2 },
+//   { a: 1, b: 2 }
+//   )); // => false)
 
-console.log("test 4: ", eqObjects(
-  { 
-    a:
-      {
-        y: 0,
-        z: 
-          {
-            j: 3,
-            k: 2
-          }
-      },
-    b: 2 
-  },
-  { 
-    a:
-      {
-        y: 0,
-        z: 
-          {
-            j: 3,
-            k: 2
-          }
-      },
-    b: 2 
-  }
-  )); // => true)
+// console.log("test 4: ", eqObjects(
+//   {
+//     a:
+//       {
+//         y: 0,
+//         z:
+//           {
+//             j: 3,
+//             k: 2
+//           }
+//       },
+//     b: 2
+//   },
+//   {
+//     a:
+//       {
+//         y: 0,
+//         z:
+//           {
+//             j: 3,
+//             k: 2
+//           }
+//       },
+//     b: 2
+//   }
+//   )); // => true)
