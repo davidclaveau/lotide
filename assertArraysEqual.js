@@ -1,7 +1,7 @@
 const eqArrays = require('./eqArrays');
 
 const assertArraysEqual = function(actual, expected) {
-  console.log(eqArrays(actual, expected));
+  return (eqArrays(actual, expected));
 };
 
 module.exports = assertArraysEqual;

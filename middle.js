@@ -5,8 +5,7 @@ const middle = function(array) {
   let midIndex = Math.floor(mid);
   let midIndexOther = false;
   
-  // If mid is an integer, the number is even so we need to have two values
-  // mid will equal the second of the two middle values, so we need the value before it
+  // If mid is an integer, the number is even so we need to have two values to use
   if (Number.isInteger(mid)) {
     midIndexOther = midIndex - 1;
   }
@@ -22,7 +21,7 @@ const middle = function(array) {
     midVal.push(array[midIndexOther]);
     midVal.push(array[midIndex]);
   }
-
+  console.log("midVal", midVal)
   return (midVal);
 };
 
